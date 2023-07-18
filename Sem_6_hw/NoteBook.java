@@ -152,7 +152,7 @@ class Note {
     // Запрос критериев фильтрации у пользователя
     Scanner scanner = new Scanner(System.in);
 
-    Map<Integer, Object> filter = new LinkedHashMap<>();
+    Map<String, Object> filter = new LinkedHashMap<>();
     // HashSet<Note> filtered = new LinkedHashSet<>();
     Integer lastKey = 0;
     Integer firstKey = 0;
@@ -188,53 +188,53 @@ class Note {
       // Как то наверное, можно автоматически сделать карту такую, но пока приходится
       // делать вручную через switch
       // нужно получать последний ключ в filter
+      lastKey++;
+      // for (Map.Entry<String, Object> entry : filter.entrySet()) {
+      // lastKey = entry.getKey();
+      // }
 
-      for (Map.Entry<Integer, Object> entry : filter.entrySet()) {
-        lastKey = entry.getKey();
-      }
-
-      //firstKey=filter.
+      // firstKey=filter.
 
       for (int elm : filter_int) {
         switch (elm) {
           case 1:
-            filter.put(lastKey + 1, nt.getId());
+            filter.putIfAbsent("id" + lastKey, nt.getId());
             break;
           case 2:
-            filter.put(lastKey + 2, nt.getName());
+            filter.putIfAbsent("name" + lastKey, nt.getName());
             break;
           case 3:
-            filter.put(lastKey + 3, nt.getVendor());
+            filter.putIfAbsent("vendor" + lastKey, nt.getVendor());
             break;
           case 4:
-            filter.put(lastKey + 4, nt.getProc());
+            filter.putIfAbsent("proc" + lastKey, nt.getProc());
             break;
           case 5:
-            filter.put(lastKey + 5, nt.getRam());
+            filter.putIfAbsent("ram" + lastKey, nt.getRam());
             break;
           case 6:
-            filter.put(lastKey + 6, nt.getdeviceCode());
+            filter.putIfAbsent("dcode" + lastKey, nt.getdeviceCode());
             break;
           case 7:
-            filter.put(lastKey + 7, nt.getOs());
+            filter.putIfAbsent("os" + lastKey, nt.getOs());
             break;
           case 8:
-            filter.put(lastKey + 8, nt.getVideoAdapter());
+            filter.putIfAbsent("vadapt" + lastKey, nt.getVideoAdapter());
             break;
           case 9:
-            filter.put(lastKey + 9, nt.getscreenRefreshRate());
+            filter.putIfAbsent("srate" + lastKey, nt.getscreenRefreshRate());
             break;
           case 10:
-            filter.put(lastKey + 10, nt.getNetAdapter());
+            filter.putIfAbsent("nadapt" + lastKey, nt.getNetAdapter());
             break;
           case 11:
-            filter.put(lastKey + 11, nt.getVolumeHDD());
+            filter.putIfAbsent("vhdd" + lastKey, nt.getVolumeHDD());
             break;
           case 12:
-            filter.put(lastKey + 12, nt.getUsbVer());
+            filter.putIfAbsent("uver" + lastKey, nt.getUsbVer());
             break;
           case 13:
-            filter.put(lastKey + 13, nt.getPrice());
+            filter.putIfAbsent("price" + lastKey, nt.getPrice());
             break;
         }
       }
@@ -245,7 +245,20 @@ class Note {
     } else {
       System.out.println("Найденные ноутбуки: " + filter);
     }
+    scanner.close();
+  }
 
+  public static void filterValNotebooks(HashMap<String, Object> filt) {
+    Scanner scanner1 = new Scanner(System.in);
+    System.out.println("Введите значения критериев фильтра через запятую:");
+
+    System.out.println();
+    String input1 = scanner1.nextLine();
+    String[] filter1_str = input1.split(",");
+    int[] filter1_int = new int[filter1_str.length];
+    for (int i = 0; i < filter1_str.length; i++) {
+      filter1_int[i] = Integer.parseInt(filter1_str[i]);
+    }
   }
 
   @Override
